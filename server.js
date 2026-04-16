@@ -2597,8 +2597,14 @@ app.post(['/generate-response', '/api/generate-response'], requireApiKey, async 
 
   try {
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    })
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: 'https://api.openai.com/v1',
+  timeout: 30000,
+  maxRetries: 0,
+})
+
+console.log('API KEY EXISTS:', !!process.env.OPENAI_API_KEY)
+console.log('OPENAI BASE URL:', 'https://api.openai.com/v1')
     const baseInput = {
       communicationMode,
       story,
@@ -2724,7 +2730,13 @@ app.post(['/generate-response', '/api/generate-response'], requireApiKey, async 
       defaultTone,
     })
   } catch (error) {
-    console.error(`OpenAI generation failed:`, error)
+    console.error('OpenAI generation failed:', {
+  name: error?.name,
+  message: error?.message,
+  status: error?.status,
+  code: error?.code,
+  cause: error?.cause?.message || error?.cause || null,
+})
 
     return res.status(500).json({
       error:
