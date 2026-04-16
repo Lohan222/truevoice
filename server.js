@@ -2731,8 +2731,11 @@ app.post('/generate-response', requireApiKey, async (req, res) => {
   }
 })
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`True Voice API listening on http://0.0.0.0:${port}`)
-})
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`True Voice API listening on http://0.0.0.0:${port}`)
+  })
+}
 
+module.exports = app
 
