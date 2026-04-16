@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import OpenAI from 'openai'
+import OpenAI from "openai";
 import { toFile } from 'openai/uploads'
 
 const app = express()
@@ -2492,8 +2492,10 @@ app.post('/transcribe-audio', requireApiKey, async (req, res) => {
             : 'webm'
 
     const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    })
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+console.log("API KEY EXISTS:", !!process.env.OPENAI_API_KEY);
 
     const resolvedFileName = fileName || `microphone-recording.${inferredExtension}`
     const resolvedMimeType = mimeType || `audio/${inferredExtension}`
