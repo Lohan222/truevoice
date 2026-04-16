@@ -2535,7 +2535,7 @@ app.post('/transcribe-audio', requireApiKey, async (req, res) => {
   }
 })
 
-app.post('/generate-response', requireApiKey, async (req, res) => {
+app.post(['/generate-response', '/api/generate-response'], requireApiKey, async (req, res) => {
   res.set('Cache-Control', 'no-store')
   res.set(`Pragma`, 'no-cache')
   res.set(`Expires`, '0')
