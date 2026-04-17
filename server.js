@@ -2187,7 +2187,8 @@ function buildGroundedResponses(input) {
 }
 
 async function extractBehaviorWithRetry(client, input) {
-  const behaviorRetry = await client.chat.completions.create({
+  const behaviorRetry = await 
+client.responses.create({
     model,
     temperature: 0,
     response_format: {
@@ -2204,20 +2205,21 @@ async function extractBehaviorWithRetry(client, input) {
         },
       },
     },
-    messages: [
-      {
-        role: 'system',
-        content:
-          `Extract only a concrete behavior from the user input. Return valid JSON only with the key behavior. If a specific action exists, do not use generic fallbacks. If no concrete behavior exists, return an empty string.`,
-      },
-      {
-        role: 'user',
-        content: buildBehaviorRepairPrompt(input),
-      },
-    ],
+    input: [
+  {
+  role: 'system',
+  content: [{
+    type: 'text',
+    text: `Extract only a concrete behavior from the user input. Return valid JSON only with the key behavior. If a specific action exists, do not use generic fallbacks. If no concrete behavior exists, return an empty string.`
+},
+{
+    role: 'user',
+    content: [{ type: 'text', text: buildBehaviorRepairPrompt(input) }],
+  },
+],
   })
 
-  const retriedBehavior = JSON.parse(behaviorRetry.choices[0]?.message?.content || '{}')
+  const retriedBehavior = JSON.parse(behaviorRetry.output[0].content[0].text || '{}')
   const concreteBehavior = extractConcreteBehaviorPhrase(getSituationSource(input))
   const repairedBehavior = normalizeBehaviorValue(retriedBehavior.behavior, input)
 
