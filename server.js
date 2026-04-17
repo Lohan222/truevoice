@@ -2201,10 +2201,11 @@ client.responses.create({
           properties: {
             behavior: { type: 'string' },
           },
-          required: ['behavior'],
-        },
-      },
-    input: [
+                          required: ['behavior'],
+              },
+            },
+          },
+          input: [
   {
   role: 'system',
   content: [{
@@ -2217,9 +2218,9 @@ client.responses.create({
     content: [{ type: 'text', text: buildBehaviorRepairPrompt(input) }],
   },
 ],
-  }
+  })
 
-  const retriedBehavior = JSON.parse(behaviorRetry.output[0].content[0].text || '{}')
+  const retrievedBehavior = JSON.parse(behaviorRetry.output[0].content[0].text || '{}')
   const concreteBehavior = extractConcreteBehaviorPhrase(getSituationSource(input))
   const repairedBehavior = normalizeBehaviorValue(retriedBehavior.behavior, input)
 
@@ -2227,7 +2228,7 @@ client.responses.create({
     (repairedBehavior && !/tone shifted|that happened|off track/i.test(repairedBehavior) && repairedBehavior) ||
     normalizeBehaviorValue(concreteBehavior, input) ||
     ''
-  )
+  );
 }
 
 async function preprocessStoryInput(client, input) {
