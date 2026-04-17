@@ -2191,20 +2191,22 @@ async function extractBehaviorWithRetry(client, input) {
 client.responses.create({
     model,
     temperature: 0,
-    response_format: {
-      type: 'json_schema',
-      json_schema: {
-        name: 'behavior_repair',
-        schema: {
-          type: 'object',
-          additionalProperties: false,
-          properties: {
-            behavior: { type: 'string' },
-          },
-                          required: ['behavior'],
-              },
-            },
-          },
+    text: {
+      format: {
+    type: 'json_schema',
+    json_schema: {
+      name: 'behavior_repair',
+      schema: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          behavior: { type: 'string' },
+        },
+        required: ['behavior'],
+      },
+    },
+  },
+},
           input: [
   {
   role: 'system',
