@@ -2211,8 +2211,9 @@ client.responses.create({
     type: 'text',
     text: `Extract only a concrete behavior from the user input. Return valid JSON only with the key behavior. If a specific action exists, do not use generic fallbacks. If no concrete behavior exists, return an empty string.`
 }],
+},
 {
-    role: 'user',
+  role: 'user',
     content: [{ type: 'text', text: buildBehaviorRepairPrompt(input) }],
   },
 ],
