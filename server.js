@@ -2742,9 +2742,13 @@ console.log('OPENAI BASE URL:', 'https://api.openai.com/v1')
 })
 
     return res.status(500).json({
-      error:
-        error?.message || `Something went wrong while generating AI responses.`,
-    })
+  error: error?.message,
+  name: error?.name,
+  status: error?.status,
+  code: error?.code,
+  type: error?.type,
+  cause: error?.cause ? String(error.cause) : null,
+});
   }
 })
 
