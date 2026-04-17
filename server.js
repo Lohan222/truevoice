@@ -2217,7 +2217,7 @@ client.responses.create({
     content: [{ type: 'text', text: buildBehaviorRepairPrompt(input) }],
   },
 ],
-  })
+  }
 
   const retriedBehavior = JSON.parse(behaviorRetry.output[0].content[0].text || '{}')
   const concreteBehavior = extractConcreteBehaviorPhrase(getSituationSource(input))
