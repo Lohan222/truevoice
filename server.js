@@ -1479,7 +1479,7 @@ function buildSoftToneTemplate(feeling) {
   const normalizedFeeling = normalizeWhitespace(feeling) || `affected`
 
   return [
-    `When you ${normalizeWhitespace(variables.behavior || input.facts || input.whatHappened || 'pulled away')}, I felt ${normalizedFeeling}.`,
+    `When something happened, I felt ${normalizedFeeling}.`,
     `If you're open to it, I'd like to talk this through.`,
   ].join(` `)
 }
@@ -1490,7 +1490,7 @@ function buildNeutralToneTemplate(feeling, request) {
   const balancedRequest = normalizedRequest ? buildInvitationLine(normalizedRequest) : `I'd like to talk this through`
 
   return [
-    `When you ${normalizeWhitespace(variables.behavior || input.facts || input.whatHappened || 'pulled away')}, I felt ${normalizedFeeling}.`,
+    `When something happened, I felt ${normalizedFeeling}.`,
     finishSentence(sentenceCase(balancedRequest)),
   ].join(` `)
 }
@@ -1499,7 +1499,7 @@ function buildDirectToneTemplate(feeling) {
   const normalizedFeeling = normalizeWhitespace(feeling) || `affected`
 
   return [
-    `When you ${normalizeWhitespace(variables.behavior || input.facts || input.whatHappened || 'pulled away')}, I felt ${normalizedFeeling}.`,
+    `When something happened, I felt ${normalizedFeeling}.`,
     `I'd like to talk this through clearly.`,
   ].join(` `)
 }
