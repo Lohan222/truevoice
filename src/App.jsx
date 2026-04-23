@@ -2287,7 +2287,10 @@ function splitSentences(text) {
       setCompleted(true)
     } catch (error) {
       if (isBehaviorClarificationError(error.message)) {
-        const friendlyMessage = behaviorClarificationMessage
+        const friendlyMessage =
+  (form.facts || '').trim() || (form.whatHappened || '').trim()
+    ? ''
+    : behaviorClarificationMessage
         const validationField = error.field || 'facts'
         const validationValidator = error.validator || 'behavior'
 
