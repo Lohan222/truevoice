@@ -2286,7 +2286,10 @@ function splitSentences(text) {
       ])
       setCompleted(true)
     } catch (error) {
-      if (isBehaviorClarificationError(error.message)) {
+      if (
+  isBehaviorClarificationError(error.message) &&
+  !((form.facts || '').trim() || (form.whatHappened || '').trim())
+) {
         const friendlyMessage =
   (form.facts || '').trim() || (form.whatHappened || '').trim()
     ? ''
