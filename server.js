@@ -2192,18 +2192,17 @@ client.responses.create({
     model,
     temperature: 0,
     text: {
-      format: {
+  format: {
     type: 'json_schema',
-    json_schema: {
-      name: 'behavior_repair',
-      schema: {
-        type: 'object',
-        additionalProperties: false,
-        properties: {
-          behavior: { type: 'string' },
-        },
-        required: ['behavior'],
+    name: 'behavior_repair',
+    strict: true,
+    schema: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        behavior: { type: 'string' },
       },
+      required: ['behavior'],
     },
   },
 },
