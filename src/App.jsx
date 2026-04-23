@@ -1176,7 +1176,20 @@ export default function App() {
   const completedStepKeysRef = useRef(completedStepKeys)
   const stepIndexRef = useRef(stepIndex)
   const activeSteps = useMemo(() => getStepsForMode(form.communicationMode), [form.communicationMode])
-  const currentStep = activeSteps[stepIndex]
+  const hasConcreteBehavior = Boolean(
+  (form.facts || '').trim() || (form.whatHappened || '').trim()
+)
+
+const baseCurrentStep = activeSteps[stepIndex]
+
+const currentStep =
+  baseCurrentStep?.key === 'boundaryChoice' && hasConcreteBehavior
+    ? {
+        ...baseCurrentStep,
+        helperText: '',
+        examples: [],
+      }
+    : baseCurrentStep
   const communicationMode = form.communicationMode || ''
   const isCustomEmotionEntry = currentStep?.key === 'primaryEmotion' && form.primaryEmotion === 'other'
   const isCurrentStepVoiceEnabled = voiceEnabledStepKeys.has(currentStep?.key)
