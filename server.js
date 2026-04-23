@@ -2221,9 +2221,11 @@ client.responses.create({
 ],
   })
 
-  const retrievedBehavior = JSON.parse(behaviorRetry.output[0].content[0].text || '{}')
+  const retrievedBehavior =
+  JSON.parse(behaviorRetry.output_text || '{}')
   const concreteBehavior = extractConcreteBehaviorPhrase(getSituationSource(input))
-  const repairedBehavior = normalizeBehaviorValue(retriedBehavior.behavior, input)
+  const repairedBehavior =
+  normalizeBehaviorValue(retrievedBehavior.behavior, input)
 
   return (
     (repairedBehavior && !/tone shifted|that happened|off track/i.test(repairedBehavior) && repairedBehavior) ||
