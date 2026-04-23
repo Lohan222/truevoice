@@ -2706,8 +2706,9 @@ console.log('OPENAI BASE URL:', 'https://api.openai.com/v1')
 
     if (!skipBehaviorValidation && !normalizeWhitespace(variables.behavior)) {
       const repairedBehavior = await extractBehaviorWithRetry(client, input)
+      const fallbackBehaviorSource = normalizeWhitespace(input.facts || input.whatHappened || input.story || '')
 
-      if (!normalizeWhitespace(repairedBehavior)) {
+      if (!normalizeWhitespace(repairedBehavior) && !fallbackBehaviorSource) {
         return res.status(422).json({
           error: `Unable to extract a concrete behavior from the current input. Please add a more specific "What actually happened?" description.`,
           field: 'facts',
@@ -2716,9 +2717,9 @@ console.log('OPENAI BASE URL:', 'https://api.openai.com/v1')
       }
 
       variables = {
-        ...variables,
-        behavior: repairedBehavior,
-      }
+  ...variables,
+  behavior: repairedBehavior || fallbackBehaviorSource,
+}
     }
 
     const toneVariants = buildUnifiedProcessingResponse(input, variables)
